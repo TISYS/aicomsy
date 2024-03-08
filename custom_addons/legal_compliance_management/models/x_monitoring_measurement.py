@@ -127,7 +127,9 @@ class ComplianceObligation(models.Model):
          ('fail', 'Fail')],
         string='Test Result'
     )
-
+    incident_id = fields.One2many(
+        'x.incident.record', 'legal_compliance_id', string='Incident Id'
+    )
     test_report = fields.Text(string='Test report')
     attachment_ids = fields.One2many('ir.attachment', 'res_id', string='Upload ', help='Attachment')
     assign_responsibility_id = fields.Many2one('res.users', string='Assign To', related='monitoring_measurement_id.assign_responsibility',
@@ -144,6 +146,7 @@ class ComplianceObligation(models.Model):
             'context': {
                 'default_description': self.description_legal_regulation,
                 'default_inc_date_time': self.date_time,
+                'default_legal_compliance_id': self.id
 
             }
         }
